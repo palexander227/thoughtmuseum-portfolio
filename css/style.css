@@ -8,7 +8,7 @@
   --accent: #1598c8;
   --accent-dark: #0b6f93;
 
-  --line: rgba(21, 152, 200, 0.24);
+  --line: rgba(21, 152, 200, 0.18);
 
   --sidebar-top: #202d38;
   --sidebar-bottom: #2f3d48;
@@ -24,9 +24,13 @@ html {
 
 body {
   margin: 0;
+
   font-family: Georgia, "Times New Roman", serif;
+
   color: var(--ink);
+
   display: flex;
+
   line-height: 1.5;
 
   background:
@@ -92,6 +96,7 @@ nav {
 
   display: flex;
   flex-direction: column;
+
   gap: 10px;
 }
 
@@ -140,11 +145,44 @@ section {
 }
 
 /* =========================
+   SUBPAGES
+========================= */
+
+.subpage-content {
+  width: 100%;
+  max-width: 1080px;
+
+  margin: 0 auto;
+
+  padding: 56px 32px;
+}
+
+.subpage-content .hero {
+  max-width: 980px;
+
+  margin: 0 auto 64px auto;
+}
+
+.subpage-content .grid {
+  max-width: 980px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(280px, 1fr));
+
+  gap: 28px;
+}
+
+/* =========================
    HERO
 ========================= */
 
 .hero {
   position: relative;
+
   overflow: hidden;
 
   padding: 70px;
@@ -227,7 +265,7 @@ h2 {
 }
 
 /* =========================
-   GRID / CARDS
+   GRID
 ========================= */
 
 .grid {
@@ -252,14 +290,6 @@ h2 {
   margin-top: 28px;
 }
 
-.course-grid .card p {
-  font-weight: normal;
-}
-
-.course-grid .card h3 {
-  font-weight: 700;
-}
-
 /* =========================
    CARD LINKS
 ========================= */
@@ -276,15 +306,6 @@ h2 {
   text-decoration: none;
 }
 
-.card-link .card h3 {
-  font-weight: 700;
-}
-
-.card-link .card p {
-  font-weight: 400;
-  line-height: 1.45;
-}
-
 /* =========================
    CARDS
 ========================= */
@@ -293,10 +314,10 @@ h2 {
 .card {
   min-height: 220px;
 
-display: flex;
-flex-direction: column;
-justify-content: flex-start;
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
   position: relative;
 
   overflow: hidden;
@@ -313,7 +334,7 @@ justify-content: flex-start;
 
   border-radius: 18px;
 
-  padding: 32px;
+  padding: 34px;
 
   box-shadow:
     0 24px 62px rgba(11, 111, 147, 0.10);
@@ -331,7 +352,7 @@ justify-content: flex-start;
 
 .feature-card:hover,
 .card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
 
   border-color: var(--accent);
 
@@ -343,15 +364,22 @@ justify-content: flex-start;
 .feature-card h3 {
   margin-top: 0;
 
+  margin-bottom: 20px;
+
   color: var(--ink);
+
+  font-weight: 700;
 
   text-decoration: none;
 }
 
 .card p,
-.feature-card p,
-section p {
+.feature-card p {
   color: var(--ink);
+
+  font-weight: 400;
+
+  line-height: 1.45;
 
   text-decoration: none;
 }
@@ -370,46 +398,6 @@ a:hover {
   color: var(--accent);
 
   text-decoration: none;
-}
-
-.subpage-content {
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 56px 32px;
-  width: 100%;
-}
-
-.subpage-content .hero {
-  max-width: 980px;
-  margin: 0 auto 64px auto;
-}
-
-.subpage-content .grid {
-  max-width: 980px;
-  margin: 0 auto;
-
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 28px;
-}.subpage-content {
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 56px 32px;
-  width: 100%;
-}
-
-.subpage-content .hero {
-  max-width: 980px;
-  margin: 0 auto 64px auto;
-}
-
-.subpage-content .grid {
-  max-width: 980px;
-  margin: 0 auto;
-
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 28px;
 }
 
 /* =========================
@@ -435,6 +423,10 @@ a:hover {
     padding: 34px 22px;
   }
 
+  .subpage-content {
+    padding: 34px 22px;
+  }
+
   .hero {
     padding: 38px;
   }
@@ -443,7 +435,7 @@ a:hover {
     font-size: 2.5rem;
   }
 
-
- 
-  
+  .course-grid {
+    grid-template-columns: 1fr;
+  }
 }
