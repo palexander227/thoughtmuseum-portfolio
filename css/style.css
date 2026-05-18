@@ -264,13 +264,25 @@ h2 {
    CARD LINKS
 ========================= */
 
-.card-link,
-.card-link:visited,
-.card-link:hover,
-.card-link:active {
-  text-decoration: none;
-  color: inherit;
+.card-link {
   display: block;
+
+  text-decoration: none;
+
+  color: inherit;
+}
+
+.card-link:hover {
+  text-decoration: none;
+}
+
+.card-link .card h3 {
+  font-weight: 700;
+}
+
+.card-link .card p {
+  font-weight: 400;
+  line-height: 1.45;
 }
 
 /* =========================
@@ -391,16 +403,6 @@ a:hover {
     font-size: 2.5rem;
   }
 
-  .card-link,
-.card-link *,
-a.card-link,
-a.card-link *,
-a.card-link:link,
-a.card-link:visited,
-a.card-link:hover,
-a.card-link:active {
-  text-decoration: none !important;
-  color: inherit !important;
-}
+ 
   
 }
