@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C*-Algebra Challenge Problems · Unit 1</title>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]']],
+        processEscapes: true,
+        packages: {'[+]': ['ams']}
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+  <style>
+    :root {
+      --ink: #1e2a32;
+      --muted: #5f6f7b;
+      --soft: #eef5f7;
+      --paper: #fbfdfe;
+      --panel: #ffffff;
+      --line: #d8e6eb;
+      --blue: #496f8a;
+      --blue-dark: #28485f;
+      --aqua: #7fc9c3;
+      --aqua-soft: #dff4f2;
+      --shadow: 0 18px 45px rgba(33, 61, 74, 0.10);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 10%, rgba(127, 201, 195, 0.22), transparent 32%),
+        linear-gradient(135deg, #f7fbfc 0%, #edf5f7 45%, #f9fcfd 100%);
+      line-height: 1.65;
+    }
+
+    a { color: inherit; }
+
+    .page-shell {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 34px 24px;
+      background: rgba(255, 255, 255, 0.78);
+      border-right: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 34px;
+    }
+
+    .brand-mark {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--blue-dark), var(--aqua));
+      color: white;
+      font-size: 30px;
+      font-family: Georgia, serif;
+      box-shadow: 0 12px 26px rgba(40, 72, 95, 0.22);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.28rem;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--blue-dark);
+    }
+
+    .brand p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    nav a {
+      display: block;
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 14px;
+      color: #40545f;
+      font-size: 0.94rem;
+      transition: 0.18s ease;
+    }
+
+    nav a:hover {
+      background: var(--aqua-soft);
+      color: var(--blue-dark);
+      transform: translateX(2px);
+    }
+
+    .sidebar-note {
+      margin-top: 34px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(238, 245, 247, 0.65);
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    main {
+      padding: 56px min(6vw, 78px) 80px;
+      overflow-x: hidden;
+    }
+
+    .hero {
+      position: relative;
+      padding: 48px;
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.92), rgba(246,251,252,0.86)),
+        radial-gradient(circle at 85% 20%, rgba(127,201,195,0.28), transparent 24%);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "*";
+      position: absolute;
+      right: 34px;
+      top: -30px;
+      font-family: Georgia, serif;
+      font-size: 11rem;
+      line-height: 1;
+      color: rgba(73, 111, 138, 0.11);
+      transform: rotate(14deg);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 16px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--aqua-soft);
+      color: var(--blue-dark);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero h2 {
+      margin: 0 0 14px;
+      max-width: 850px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.2rem, 5vw, 4.8rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+      color: var(--blue-dark);
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .meta-card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .meta-card strong {
+      display: block;
+      color: var(--blue-dark);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .meta-card span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    section {
+      margin-top: 34px;
+      padding: 34px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.84);
+      box-shadow: 0 10px 30px rgba(33, 61, 74, 0.055);
+    }
+
+    section h3 {
+      margin: 0 0 16px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.72rem;
+      color: var(--blue-dark);
+      letter-spacing: -0.025em;
+    }
+
+    .section-kicker {
+      margin: -6px 0 24px;
+      color: var(--muted);
+      max-width: 850px;
+    }
+
+    .learning-goals {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .goal {
+      padding: 18px;
+      border-radius: 18px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+    }
+
+    .goal b { color: var(--blue-dark); }
+    .goal p { margin: 8px 0 0; color: var(--muted); font-size: 0.94rem; }
+
+    .problem {
+      position: relative;
+      margin: 28px 0;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: linear-gradient(180deg, #ffffff, #f8fcfd);
+    }
+
+    .problem:last-child { margin-bottom: 0; }
+
+    .problem-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+
+    .problem-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: var(--blue-dark);
+      color: white;
+      font-weight: 800;
+    }
+
+    .problem-title-wrap { flex: 1; }
+
+    .problem h4 {
+      margin: 0;
+      color: var(--blue-dark);
+      font-size: 1.18rem;
+      letter-spacing: -0.01em;
+    }
+
+    .problem-tag {
+      display: inline-block;
+      margin-top: 5px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.075em;
+      font-weight: 700;
+    }
+
+    .problem p { margin: 12px 0; }
+
+    .subtasks {
+      margin: 16px 0 0;
+      padding-left: 1.25rem;
+    }
+
+    .subtasks li { margin: 10px 0; }
+
+    details {
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(238, 245, 247, 0.56);
+      overflow: hidden;
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 13px 16px;
+      color: var(--blue-dark);
+      font-weight: 800;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    .details-body {
+      padding: 0 16px 16px;
+      color: #3c4d57;
+    }
+
+    .operator-note {
+      padding: 18px 20px;
+      border-left: 5px solid var(--aqua);
+      border-radius: 16px;
+      background: #f3fbfa;
+      color: #38545e;
+    }
+
+    .proof-frame {
+      padding: 20px;
+      border-radius: 18px;
+      background: #fbfdfe;
+      border: 1px dashed #b9d4dc;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .button-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 16px;
+      border-radius: 999px;
+      background: var(--blue-dark);
+      color: white;
+      text-decoration: none;
+      font-weight: 750;
+      font-size: 0.92rem;
+    }
+
+    .button-link.secondary {
+      background: white;
+      color: var(--blue-dark);
+      border: 1px solid var(--line);
+    }
+
+    code {
+      padding: 0.12em 0.35em;
+      border-radius: 7px;
+      background: #eef5f7;
+      color: #28485f;
+      font-size: 0.92em;
+    }
+
+    @media (max-width: 960px) {
+      .page-shell { grid-template-columns: 1fr; }
+      aside {
+        position: relative;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+      nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      main { padding: 28px 18px 54px; }
+      .hero { padding: 30px; }
+      .meta-grid, .learning-goals { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-shell">
+    <aside>
+      <div class="brand">
+        <div class="brand-mark">*</div>
+        <h1>C*-Algebra Challenge Problems</h1>
+        <p>Problem-solving symposium through operator algebraic thinking.</p>
+      </div>
+
+      <nav aria-label="Unit navigation">
+        <a href="#overview">Overview</a>
+        <a href="#goals">Learning Goals</a>
+        <a href="#problems">Problem Set 1</a>
+        <a href="#p1">1. Normed *-Algebras</a>
+        <a href="#p2">2. The C*-Identity</a>
+        <a href="#p3">3. Positive Elements</a>
+        <a href="#p4">4. Spectral Radius</a>
+        <a href="#p5">5. Commutative Models</a>
+        <a href="#p6">6. Projections</a>
+        <a href="#p7">7. States</a>
+        <a href="#p8">8. Mini-Synthesis</a>
+      </nav>
+
+      <div class="sidebar-note">
+        <strong>Seminar rhythm.</strong><br />
+        Each problem is designed to be attacked first as a mathematical object, then interpreted as a representation-theoretic phenomenon.
+      </div>
+    </aside>
+
+    <main>
+      <header class="hero" id="overview">
+        <div class="eyebrow">Unit 1 · Foundations</div>
+        <h2>The C*-Identity as a Geometry of Operations</h2>
+        <p>
+          This first challenge set introduces C*-algebras not merely as algebraic gadgets, but as spaces where multiplication,
+          adjoint, norm, positivity, and spectrum conspire to form a rigid analytic geometry. The guiding question is:
+          what kind of mathematical world is forced into existence by the identity \(\|a^*a\|=\|a\|^2\)?
+        </p>
+
+        <div class="meta-grid">
+          <div class="meta-card"><strong>Level</strong><span>Advanced undergraduate / beginning graduate</span></div>
+          <div class="meta-card"><strong>Format</strong><span>Seminar through problems</span></div>
+          <div class="meta-card"><strong>Prerequisites</strong><span>Linear algebra, normed spaces, basic complex analysis helpful</span></div>
+          <div class="meta-card"><strong>Theme</strong><span>Algebra + topology + spectrum</span></div>
+        </div>
+      </header>
+
+      <section id="goals">
+        <h3>Learning Goals</h3>
+        <p class="section-kicker">
+          By the end of this unit, the student should begin to see why C*-algebras are simultaneously algebraic,
+          analytic, spectral, and geometric objects.
+        </p>
+
+        <div class="learning-goals">
+          <div class="goal"><b>Recognize the structure.</b><p>Identify the roles played by multiplication, involution, norm, completeness, and the C*-identity.</p></div>
+          <div class="goal"><b>Understand rigidity.</b><p>See how the C*-identity strongly constrains the norm and ties algebraic operations to geometry.</p></div>
+          <div class="goal"><b>Connect to models.</b><p>Relate abstract examples to concrete operator algebras and commutative function algebras.</p></div>
+        </div>
+      </section>
+
+      <section id="problems">
+        <h3>Problem Set 1</h3>
+        <p class="section-kicker">
+          Work slowly. The problems are ordered so that earlier questions give conceptual handles for later ones.
+          Hints and discussion notes are included, but the intended rhythm is to attempt each problem before opening them.
+        </p>
+
+        <article class="problem" id="p1">
+          <div class="problem-header"><div class="problem-number">1</div><div class="problem-title-wrap"><h4>Normed *-Algebras: The Basic Grammar</h4><span class="problem-tag">Definitions · Examples · Counterexamples</span></div></div>
+          <p>A <em>normed *-algebra</em> over \(\mathbb C\) is an algebra \(A\) equipped with a norm \(\|\cdot\|\) and an involution \(a \mapsto a^*\) satisfying</p>
+          \[
+            (a+b)^*=a^*+b^*,\qquad (\lambda a)^*=\overline{\lambda}a^*,\qquad
+            (ab)^*=b^*a^*,\qquad (a^*)^*=a.
+          \]
+          <ol class="subtasks">
+            <li>Explain why the formula \((ab)^*=b^*a^*\), rather than \((ab)^*=a^*b^*\), is the natural one for matrices.</li>
+            <li>Show that \(M_n(\mathbb C)\), with conjugate-transpose as involution, is a *-algebra.</li>
+            <li>Give an example of a commutative *-algebra and explain why the order reversal in \((ab)^*=b^*a^*\) becomes invisible there.</li>
+            <li>Explain why completeness is not yet part of the definition of a normed *-algebra.</li>
+          </ol>
+          <details><summary>Hint</summary><div class="details-body">Think of matrices as linear transformations. The adjoint is defined by the inner product identity \(\langle Tv,w\rangle=\langle v,T^*w\rangle\). Apply this twice to \(ST\).</div></details>
+          <details><summary>Discussion</summary><div class="details-body"><div class="operator-note">The involution is not merely decoration. It encodes a reversal of operational order: if \(ab\) means “first apply \(b\), then apply \(a\),” the adjoint reverses the chain of action.</div></div></details>
+        </article>
+
+        <article class="problem" id="p2">
+          <div class="problem-header"><div class="problem-number">2</div><div class="problem-title-wrap"><h4>The C*-Identity as a Norm Constraint</h4><span class="problem-tag">Core Identity</span></div></div>
+          <p>A C*-algebra is a Banach *-algebra \(A\) satisfying the identity</p>
+          \[\|a^*a\|=\|a\|^2 \qquad \text{for every } a\in A.\]
+          <ol class="subtasks">
+            <li>Assuming the norm is submultiplicative, show that \(\|a^*a\|\leq \|a^*\|\|a\|\).</li>
+            <li>Use the C*-identity to explain why the involution cannot be wildly discontinuous.</li>
+            <li>In a C*-algebra, prove that \(\|a^*\|=\|a\|\).</li>
+            <li>Explain conceptually why this makes the involution an isometry.</li>
+          </ol>
+          <details><summary>Hint</summary><div class="details-body">Apply the C*-identity to \(a\) and then to \(a^*\). Remember that \((a^*)^*a^*=aa^*\).</div></details>
+          <details><summary>Solution Sketch</summary><div class="details-body proof-frame">From submultiplicativity, \(\|a\|^2=\|a^*a\|\leq \|a^*\|\|a\|\), so for \(a\neq 0\), \(\|a\|\leq \|a^*\|\). Applying the same argument to \(a^*\) gives \(\|a^*\|\leq \|a\|\). Hence \(\|a^*\|=\|a\|\).</div></details>
+        </article>
+
+        <article class="problem" id="p3">
+          <div class="problem-header"><div class="problem-number">3</div><div class="problem-title-wrap"><h4>Self-Adjoint and Positive Elements</h4><span class="problem-tag">Order Structure</span></div></div>
+          <p>An element \(a\in A\) is <em>self-adjoint</em> if \(a=a^*\). In concrete operator algebras, elements of the form \(b^*b\) are interpreted as positive.</p>
+          <ol class="subtasks">
+            <li>Show that \(b^*b\) is self-adjoint for every \(b\in A\).</li>
+            <li>For \(A=M_n(\mathbb C)\), show that \(B^*B\) is positive semidefinite in the usual matrix sense.</li>
+            <li>Explain why positivity is a bridge between algebraic form and geometric measurement.</li>
+            <li>Give an example of a self-adjoint matrix that is not positive semidefinite.</li>
+          </ol>
+          <details><summary>Hint</summary><div class="details-body">For matrices, compute \(\langle B^*Bv,v\rangle\). The expression should turn into a norm squared.</div></details>
+          <details><summary>Solution Sketch</summary><div class="details-body proof-frame">Since \((b^*b)^*=b^*(b^*)^*=b^*b\), the element \(b^*b\) is self-adjoint. In matrices, \(\langle B^*Bv,v\rangle=\langle Bv,Bv\rangle=\|Bv\|^2\geq 0\), so \(B^*B\) is positive semidefinite.</div></details>
+        </article>
+
+        <article class="problem" id="p4">
+          <div class="problem-header"><div class="problem-number">4</div><div class="problem-title-wrap"><h4>Spectrum and Spectral Radius</h4><span class="problem-tag">Spectral Thinking</span></div></div>
+          <p>For a unital algebra \(A\), the spectrum of \(a\in A\) is</p>
+          \[\sigma(a)=\{\lambda\in\mathbb C: a-\lambda 1 \text{ is not invertible}\}.\]
+          <p>The spectral radius is \(r(a)=\sup\{|\lambda|:\lambda\in\sigma(a)\}\).</p>
+          <ol class="subtasks">
+            <li>Compute the spectrum of a diagonal matrix in \(M_n(\mathbb C)\).</li>
+            <li>Compute the spectral radius of \(\mathrm{diag}(2,-3,i)\).</li>
+            <li>Explain why spectrum is a nonlinear invariant of an algebra element.</li>
+            <li>For normal matrices, compare \(r(A)\) and \(\|A\|\) under the operator norm.</li>
+          </ol>
+          <details><summary>Hint</summary><div class="details-body">A diagonal matrix is invertible exactly when none of its diagonal entries are zero.</div></details>
+          <details><summary>Discussion</summary><div class="details-body"><div class="operator-note">Spectrum is one of the deep ways C*-algebras turn algebra into geometry. An element is studied not only by its formula, but by the shape of the complex set that records its possible “observable values.”</div></div></details>
+        </article>
+
+        <article class="problem" id="p5">
+          <div class="problem-header"><div class="problem-number">5</div><div class="problem-title-wrap"><h4>The Commutative Model: Continuous Functions</h4><span class="problem-tag">Gelfand Picture</span></div></div>
+          <p>Let \(X\) be a compact Hausdorff space. The algebra \(C(X)\) of continuous complex-valued functions on \(X\) becomes a C*-algebra with pointwise operations, involution \(f^*(x)=\overline{f(x)}\), and norm</p>
+          \[\|f\|_\infty=\sup_{x\in X}|f(x)|.\]
+          <ol class="subtasks">
+            <li>Verify that \(f^*f\) is the function \(x\mapsto |f(x)|^2\).</li>
+            <li>Prove the C*-identity for \(C(X)\): \(\|f^*f\|_\infty=\|f\|_\infty^2\).</li>
+            <li>Explain why compactness makes the supremum norm especially well-behaved.</li>
+            <li>For \(X=\{1,2,3\}\), identify \(C(X)\) with a familiar finite-dimensional algebra.</li>
+          </ol>
+          <details><summary>Hint</summary><div class="details-body">The supremum of \(|f(x)|^2\) is the square of the supremum of \(|f(x)|\), because squaring is increasing on \([0,\infty)\).</div></details>
+          <details><summary>Solution Sketch</summary><div class="details-body proof-frame">Since \((f^*f)(x)=\overline{f(x)}f(x)=|f(x)|^2\), \[\|f^*f\|_\infty=\sup_{x\in X}|f(x)|^2=\left(\sup_{x\in X}|f(x)|\right)^2=\|f\|_\infty^2.\] For a three-point space, \(C(X)\cong \mathbb C^3\) with coordinatewise operations.</div></details>
+        </article>
+
+        <article class="problem" id="p6">
+          <div class="problem-header"><div class="problem-number">6</div><div class="problem-title-wrap"><h4>Projections as Algebraic Geometry</h4><span class="problem-tag">Idempotents · Subspaces</span></div></div>
+          <p>A projection in a C*-algebra is an element \(p\in A\) satisfying</p>
+          \[p=p^*=p^2.\]
+          <ol class="subtasks">
+            <li>Show that an orthogonal projection matrix satisfies this definition.</li>
+            <li>Find all projections in \(C(X)\), where \(X\) is connected.</li>
+            <li>Find all projections in \(C(\{1,2,3\})\).</li>
+            <li>Explain why projections behave like “noncommutative characteristic functions.”</li>
+          </ol>
+          <details><summary>Hint</summary><div class="details-body">In \(C(X)\), the equation \(p^2=p\) says \(p(x)^2=p(x)\) for each \(x\). Thus each value is either \(0\) or \(1\).</div></details>
+          <details><summary>Solution Sketch</summary><div class="details-body proof-frame">For \(C(X)\), a projection is a continuous function from \(X\) into \(\{0,1\}\). If \(X\) is connected, the only such functions are constant, so the only projections are \(0\) and \(1\). For a three-point space, projections correspond to choosing any subset of the three points, so there are \(2^3=8\) projections.</div></details>
+        </article>
+
+        <article class="problem" id="p7">
+          <div class="problem-header"><div class="problem-number">7</div><div class="problem-title-wrap"><h4>States as Noncommutative Probability Measures</h4><span class="problem-tag">Positive Linear Functionals</span></div></div>
+          <p>A state on a unital C*-algebra \(A\) is a linear functional \(\varphi:A\to\mathbb C\) such that \(\varphi(a^*a)\geq 0\) for all \(a\in A\), and \(\varphi(1)=1\).</p>
+          <ol class="subtasks">
+            <li>For \(A=M_n(\mathbb C)\), show that \(\varphi(A)=\frac{1}{n}\operatorname{Tr}(A)\) is a state.</li>
+            <li>For \(A=C(X)\), explain why integration against a probability measure defines a state.</li>
+            <li>Why does the condition \(\varphi(a^*a)\geq 0\) resemble positivity of expectation?</li>
+            <li>Explain how this idea prepares the way for free probability.</li>
+          </ol>
+          <details><summary>Hint</summary><div class="details-body">For matrices, use \(\operatorname{Tr}(B^*B)=\sum_{i,j}|b_{ij}|^2\). For functions, use \(|f|^2\geq 0\).</div></details>
+          <details><summary>Discussion</summary><div class="details-body"><div class="operator-note">A state lets us speak probabilistically inside an algebra. In commutative algebras, this recovers ordinary probability measures. In noncommutative algebras, it becomes the conceptual gateway to quantum probability and free probability.</div></div></details>
+        </article>
+
+        <article class="problem" id="p8">
+          <div class="problem-header"><div class="problem-number">8</div><div class="problem-title-wrap"><h4>Mini-Synthesis: What Does the C*-Identity Do?</h4><span class="problem-tag">Conceptual Essay · Seminar Synthesis</span></div></div>
+          <p>Write a short mathematical reflection, about 500–800 words, responding to the following prompt:</p>
+          <div class="operator-note">The C*-identity \(\|a^*a\|=\|a\|^2\) appears at first to be a technical constraint. Explain why, after this problem set, it should instead be regarded as the structural bridge between algebra, geometry, order, spectrum, and probability.</div>
+          <ol class="subtasks">
+            <li>Use at least two examples from this problem set.</li>
+            <li>Discuss both matrix algebras and commutative function algebras.</li>
+            <li>Include a comment on positivity or states.</li>
+            <li>Conclude by explaining why C*-algebras are natural homes for noncommutative mathematics.</li>
+          </ol>
+          <details><summary>Possible Structure</summary><div class="details-body">Begin with matrices as the concrete model. Then shift to \(C(X)\) as the commutative model. Use the C*-identity to connect norm and adjoint. Then discuss positivity through \(a^*a\), projections as generalized characteristic functions, and states as generalized probability measures.</div></details>
+        </article>
+      </section>
+
+      <section>
+        <h3>Closing Note</h3>
+        <p>This first unit is meant to feel like the opening movement of a seminar: the student learns the grammar, but also begins to see why the grammar is unusually rigid and expressive. In later units, this structure can be developed toward representation theory, spectral theory, compact operators, von Neumann algebras, free probability, and computational operator algebra experiments.</p>
+        <div class="footer-links">
+          <a class="button-link" href="#overview">Back to top</a>
+          <a class="button-link secondary" href="../operator-algebras.html">Operator Algebras Page</a>
+          <a class="button-link secondary" href="../computational-operator-algebras-minicourse.html">Computational Minicourse</a>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
