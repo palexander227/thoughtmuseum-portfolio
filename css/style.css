@@ -252,6 +252,14 @@ h2 {
   margin-top: 28px;
 }
 
+.course-grid .card p {
+  font-weight: normal;
+}
+
+.course-grid .card h3 {
+  font-weight: 700;
+}
+
 /* =========================
    CARD LINKS
 ========================= */
@@ -342,8 +350,6 @@ section p {
 
 a {
   color: var(--accent-dark);
-
-  font-weight: bold;
 
   text-decoration: none;
 }
