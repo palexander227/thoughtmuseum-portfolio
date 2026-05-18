@@ -400,6 +400,14 @@ a:hover {
   text-decoration: none;
 }
 
+.subpage-content {
+  display: block;
+}
+
+body:has(.subpage-content) {
+  display: block;
+}
+
 /* =========================
    MOBILE
 ========================= */
