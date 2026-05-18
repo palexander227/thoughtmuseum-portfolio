@@ -372,6 +372,46 @@ a:hover {
   text-decoration: none;
 }
 
+.subpage-content {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 56px 32px;
+  width: 100%;
+}
+
+.subpage-content .hero {
+  max-width: 980px;
+  margin: 0 auto 64px auto;
+}
+
+.subpage-content .grid {
+  max-width: 980px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+}.subpage-content {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 56px 32px;
+  width: 100%;
+}
+
+.subpage-content .hero {
+  max-width: 980px;
+  margin: 0 auto 64px auto;
+}
+
+.subpage-content .grid {
+  max-width: 980px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+}
+
 /* =========================
    MOBILE
 ========================= */
@@ -403,29 +443,6 @@ a:hover {
     font-size: 2.5rem;
   }
 
-  .subpage-content {
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 56px 32px;
-}
-
-  .subpage-content .hero {
-  max-width: 980px;
-  margin: 0 auto 64px auto;
-}
-
-  .subpage-content .grid {
-  max-width: 980px;
-
-  margin: 0 auto;
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(auto-fit, minmax(280px, 1fr));
-
-  gap: 28px;
-}
 
  
   
