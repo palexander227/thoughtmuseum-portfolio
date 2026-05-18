@@ -231,7 +231,11 @@ a:hover {
   text-decoration: none;
   color: inherit;
   display: block;
-}
+  }
+  
+  .card-link:hover {
+  text-decoration: none;
+  }
 
   
 }
