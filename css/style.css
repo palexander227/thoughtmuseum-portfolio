@@ -242,5 +242,21 @@ a:hover {
   color: inherit !important;
   }
 
+  a.card-link,
+a.card-link:link,
+a.card-link:visited,
+a.card-link:hover,
+a.card-link:active {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+a.card-link .card,
+a.card-link .card h3,
+a.card-link .card p {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
   
 }
