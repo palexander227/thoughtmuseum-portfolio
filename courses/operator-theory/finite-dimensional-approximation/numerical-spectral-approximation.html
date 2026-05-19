@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Numerical Spectral Approximation</title>
+
+  <link rel="stylesheet" href="../../../css/style.css" />
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+  <style>
+    .worksheet-section {
+      margin-top: 2rem;
+      padding: 2rem;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(120,150,160,0.25);
+      box-shadow: 0 12px 30px rgba(20,40,50,0.06);
+    }
+
+    .problem-block {
+      margin: 1.5rem 0;
+      padding: 1.5rem;
+      border-left: 5px solid #7fc9c3;
+      background: #f6fbfc;
+      border-radius: 14px;
+    }
+
+    .theorem-box {
+      padding: 1.6rem;
+      border-radius: 18px;
+      background: #eef7f8;
+      border: 1px solid #cfe3e7;
+      margin: 1.5rem 0;
+    }
+
+    .proof-box {
+      padding: 1.8rem;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px dashed #aac7cf;
+      margin-top: 1.5rem;
+    }
+
+    .small-label {
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #496f8a;
+      font-weight: 700;
+      font-size: .78rem;
+    }
+  </style>
+</head>
+
+<body>
+
+<main class="subpage-content">
+
+<section class="hero">
+  <p class="eyebrow">Finite Dimensional Approximation</p>
+
+  <h2>Numerical Spectral Approximation</h2>
+
+  <p>
+    A self-contained worksheet on the numerical range, spectral geometry,
+    and the Toeplitz–Hausdorff theorem on convexity.
+  </p>
+</section>
+
+<section class="worksheet-section">
+
+  <p class="small-label">Guiding question</p>
+
+  <h3>How much of an operator can be seen through quadratic measurement?</h3>
+
+  <p>
+    Let \(A\in M_n(\mathbb C)\). The eigenvalues of \(A\) tell us where
+    \(A-\lambda I\) fails to be invertible. But there is another spectral
+    object, more geometric and more stable under numerical approximation:
+    the <em>numerical range</em>.
+  </p>
+
+  <div class="theorem-box">
+    <strong>Definition.</strong>
+    The numerical range of \(A\) is
+    \[
+      W(A)=\{ \langle Ax,x\rangle : x\in \mathbb C^n,\ \|x\|=1\}.
+    \]
+  </div>
+
+  <p>
+    This set records all possible expectation values of the operator \(A\)
+    against unit vectors. It is a bridge between linear algebra,
+    spectral theory, quantum measurement, and numerical approximation.
+  </p>
+
+</section>
+
+<section class="worksheet-section">
+
+  <h3>Part I. First Examples</h3>
+
+  <div class="problem-block">
+    <strong>Problem 1.</strong>
+    Suppose \(A=\operatorname{diag}(\lambda_1,\dots,\lambda_n)\).
+    Show that
+    \[
+      \langle Ax,x\rangle
+      =
+      \sum_{j=1}^n \lambda_j |x_j|^2.
+    \]
+    Explain why \(W(A)\) is contained in the convex hull of
+    \(\lambda_1,\dots,\lambda_n\).
+  </div>
+
+  <div class="problem-block">
+    <strong>Problem 2.</strong>
+    If \(A=A^*\), prove that \(W(A)\subset \mathbb R\).
+    Then show that \(W(A)\) is the interval
+    \[
+      [\lambda_{\min}(A),\lambda_{\max}(A)].
+    \]
+  </div>
+
+  <div class="problem-block">
+    <strong>Problem 3.</strong>
+    Let
+    \[
+      A=
+      \begin{pmatrix}
+      0 & 1\\
+      0 & 0
+      \end{pmatrix}.
+    \]
+    Compute \(\langle Ax,x\rangle\) for
+    \(x=(\cos t,e^{i\theta}\sin t)\). Show that \(W(A)\) is the closed disk
+    centered at \(0\) with radius \(1/2\).
+  </div>
+
+</section>
+
+<section class="worksheet-section">
+
+  <h3>Part II. The Two-Dimensional Case</h3>
+
+  <p>
+    The heart of the Toeplitz–Hausdorff theorem is already visible in
+    dimension two.
+  </p>
+
+  <div class="theorem-box">
+    <strong>Lemma.</strong>
+    If \(B\in M_2(\mathbb C)\), then \(W(B)\) is an elliptical disk,
+    possibly degenerate. In particular, \(W(B)\) is convex.
+  </div>
+
+  <p>
+    To see why, put \(B\) into Schur triangular form:
+    \[
+      B=
+      \begin{pmatrix}
+      \alpha & c\\
+      0 & \beta
+      \end{pmatrix}.
+    \]
+    For a unit vector \(x=(\cos t,e^{i\theta}\sin t)\), one obtains
+    \[
+      \langle Bx,x\rangle
+      =
+      \alpha\cos^2 t+\beta\sin^2 t
+      +
+      c e^{i\theta}\sin t\cos t.
+    \]
+  </p>
+
+  <div class="problem-block">
+    <strong>Problem 4.</strong>
+    For fixed \(t\), explain why the last expression traces a circle as
+    \(\theta\) varies.
+  </div>
+
+  <div class="problem-block">
+    <strong>Problem 5.</strong>
+    Explain geometrically why allowing \(t\) to vary fills an elliptical disk
+    with foci \(\alpha\) and \(\beta\).
+  </div>
+
+</section>
+
+<section class="worksheet-section">
+
+  <h3>Part III. The Toeplitz–Hausdorff Theorem</h3>
+
+  <div class="theorem-box">
+    <strong>Toeplitz–Hausdorff Theorem.</strong>
+    For every matrix \(A\in M_n(\mathbb C)\), the numerical range
+    \[
+      W(A)=\{\langle Ax,x\rangle:\|x\|=1\}
+    \]
+    is a convex subset of \(\mathbb C\).
+  </div>
+
+  <div class="proof-box">
+    <p><strong>Proof.</strong></p>
+
+    <p>
+      Let \(z,w\in W(A)\). Then there exist unit vectors \(x,y\in\mathbb C^n\)
+      such that
+      \[
+        z=\langle Ax,x\rangle,
+        \qquad
+        w=\langle Ay,y\rangle.
+      \]
+    </p>
+
+    <p>
+      Let \(M=\operatorname{span}\{x,y\}\). This subspace has dimension at
+      most two. Let \(P_M\) denote the orthogonal projection onto \(M\), and
+      consider the compression
+      \[
+        B=P_M A|_M.
+      \]
+    </p>
+
+    <p>
+      For every unit vector \(u\in M\),
+      \[
+        \langle Bu,u\rangle
+        =
+        \langle P_MAu,u\rangle
+        =
+        \langle Au,u\rangle.
+      \]
+      Therefore
+      \[
+        W(B)\subseteq W(A).
+      \]
+    </p>
+
+    <p>
+      Since \(x,y\in M\), both \(z\) and \(w\) belong to \(W(B)\).
+      But \(B\) acts on a space of dimension at most two, so by the
+      two-dimensional lemma, \(W(B)\) is convex.
+    </p>
+
+    <p>
+      Hence the entire line segment
+      \[
+        tz+(1-t)w,\qquad 0\leq t\leq 1,
+      \]
+      lies in \(W(B)\), and therefore lies in \(W(A)\).
+    </p>
+
+    <p>
+      Since any two points of \(W(A)\) are joined by a line segment contained
+      in \(W(A)\), the numerical range \(W(A)\) is convex. \(\square\)
+    </p>
+  </div>
+
+</section>
+
+<section class="worksheet-section">
+
+  <h3>Why This Belongs Here</h3>
+
+  <p>
+    The numerical range is especially important for finite-dimensional
+    approximation because it behaves more continuously and geometrically than
+    the raw spectrum alone. In computation, spectra may be unstable under
+    perturbation, while numerical ranges and pseudospectral regions often
+    reveal the operational geometry more faithfully.
+  </p>
+
+  <p>
+    The Toeplitz–Hausdorff theorem is therefore not merely a classical result.
+    It says that the expectation-value shadow of an operator is always convex:
+    a hidden geometric regularity inside arbitrary complex matrices.
+  </p>
+
+</section>
+
+<p>
+  <a href="index.html">← Back to Finite Dimensional Approximation</a>
+</p>
+
+</main>
+
+</body>
+</html>
