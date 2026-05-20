@@ -384,6 +384,36 @@ h2 {
   text-decoration: none;
 }
 
+.feature-banner {
+  margin: 32px 0;
+  padding: 18px 24px;
+  border-radius: 18px;
+  background: rgba(180, 230, 255, 0.08);
+  border: 1px solid rgba(120, 190, 255, 0.25);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  backdrop-filter: blur(6px);
+}
+
+.feature-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #5aa9d6;
+  margin-right: 14px;
+  font-weight: 600;
+}
+
+.feature-banner a {
+  color: #16324f;
+  text-decoration: none;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.feature-banner a:hover {
+  color: #2c7fb8;
+}
+
 /* =========================
    GENERAL LINKS
 ========================= */
