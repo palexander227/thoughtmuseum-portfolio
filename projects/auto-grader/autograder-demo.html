@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>R/Python Auto-Grading Lab</title>
+  <style>
+    :root {
+      --ink: #203040;
+      --muted: #657789;
+      --soft: #f4f8fb;
+      --card: #ffffff;
+      --line: #d7e4ec;
+      --accent: #1f7a8c;
+      --accent-soft: #dff3f5;
+      --gold: #fff4c2;
+      --shadow: 0 18px 45px rgba(32, 48, 64, 0.10);
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+      background: linear-gradient(135deg, #eef6f9 0%, #f9fbfc 42%, #edf5f7 100%);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 56px 24px 72px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--gold);
+      color: #755c00;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 34px;
+      align-items: stretch;
+      margin-bottom: 34px;
+    }
+
+    .hero-card,
+    .system-card,
+    .feature-card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 38px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "∗";
+      position: absolute;
+      right: 30px;
+      top: 12px;
+      font-size: 9rem;
+      color: rgba(31, 122, 140, 0.10);
+      font-family: Georgia, serif;
+      transform: rotate(14deg);
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(2.25rem, 5vw, 4rem);
+      line-height: 1.02;
+      letter-spacing: -0.045em;
+    }
+
+    .lead {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1.12rem;
+      margin: 0 0 26px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .tag {
+      border: 1px solid #b9d7df;
+      color: #245d69;
+      background: #f5fbfc;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 650;
+    }
+
+    .system-card {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 390px;
+    }
+
+    .diagram-title {
+      font-weight: 800;
+      letter-spacing: -0.015em;
+      font-size: 1.15rem;
+      margin-bottom: 20px;
+    }
+
+    .pipeline {
+      display: grid;
+      gap: 12px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 13px 14px;
+      border-radius: 18px;
+      background: var(--soft);
+      border: 1px solid #dce9ef;
+    }
+
+    .num {
+      height: 34px;
+      width: 34px;
+      border-radius: 12px;
+      background: var(--accent);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .step strong {
+      display: block;
+      font-size: 0.98rem;
+      margin-bottom: 2px;
+    }
+
+    .step span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .feature-card {
+      padding: 24px;
+      min-height: 205px;
+    }
+
+    .icon {
+      height: 44px;
+      width: 44px;
+      border-radius: 16px;
+      background: var(--accent-soft);
+      display: grid;
+      place-items: center;
+      margin-bottom: 16px;
+      color: var(--accent);
+      font-weight: 900;
+      font-size: 1.2rem;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .feature-card p,
+    .caption {
+      color: var(--muted);
+      margin: 0;
+      font-size: 0.96rem;
+    }
+
+    .showcase {
+      margin-top: 28px;
+      background: #102331;
+      color: #eaf6f8;
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .showcase h2 {
+      color: white;
+      margin-bottom: 12px;
+    }
+
+    .terminal {
+      margin-top: 18px;
+      background: #071620;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 18px;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.88rem;
+      color: #b8f2e6;
+      overflow-x: auto;
+    }
+
+    .terminal .dim {
+      color: #7fa1ad;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .metric {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 1.6rem;
+      line-height: 1;
+      color: white;
+      margin-bottom: 7px;
+    }
+
+    .metric span {
+      color: #b9cbd2;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .grid,
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-card">
+        <div class="eyebrow">★ Live Prototype · Auto-Grading Systems</div>
+        <h1>R/Python Auto-Grading Lab</h1>
+        <p class="lead">
+          This proof-of-concept demonstrates a reproducible computational grading environment for data science, statistics, and programming courses. The system accepts R scripts, Python notebooks, and RMarkdown submissions, runs automated checks, returns structured feedback, and produces instructor-facing analytics.
+        </p>
+        <div class="tags">
+          <span class="tag">R + Python</span>
+          <span class="tag">Jupyter</span>
+          <span class="tag">RMarkdown</span>
+          <span class="tag">GitHub Classroom</span>
+          <span class="tag">GitHub Actions</span>
+          <span class="tag">Instructor Analytics</span>
+        </div>
+      </div>
+
+      <aside class="system-card">
+        <div>
+          <div class="diagram-title">Prototype Workflow</div>
+          <div class="pipeline">
+            <div class="step"><div class="num">1</div><div><strong>Assignment Published</strong><span>A starter repository is released with instructions, data files, and visible checks.</span></div></div>
+            <div class="step"><div class="num">2</div><div><strong>Student Work Submitted</strong><span>Students push completed R, Python, notebook, or RMarkdown work to GitHub.</span></div></div>
+            <div class="step"><div class="num">3</div><div><strong>Automated Tests Execute</strong><span>Visible and hidden tests run through an Otter-Grader / GitHub Actions pipeline.</span></div></div>
+            <div class="step"><div class="num">4</div><div><strong>Feedback Is Generated</strong><span>The system produces scores, error messages, and instructor-level performance summaries.</span></div></div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="grid">
+      <article class="feature-card">
+        <div class="icon">π</div>
+        <h2>Notebook-Aware Assessment</h2>
+        <p>The prototype evaluates code, written explanation, data visualization, and computational reasoning within a single assignment environment.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="icon">R</div>
+        <h2>Cross-Language Support</h2>
+        <p>The workflow is designed for courses where students move between R, Python, statistics, regression, simulation, and applied data modeling.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="icon">✓</div>
+        <h2>Structured Feedback</h2>
+        <p>Students receive immediate correctness signals while instructors retain deeper hidden tests and class-wide diagnostic information.</p>
+      </article>
+    </section>
+
+    <section class="showcase">
+      <h2>Live Demo Sequence</h2>
+      <p class="caption">
+        The demo sequence below illustrates the intended user experience: a student pushes a submission, the grading pipeline runs automatically, and the system produces both student-facing feedback and instructor-facing analytics.
+      </p>
+
+      <div class="terminal">
+        <div><span class="dim">$</span> git push origin main</div>
+        <div><span class="dim">→</span> Submission received by GitHub Classroom repository</div>
+        <div><span class="dim">→</span> GitHub Actions workflow initialized</div>
+        <div><span class="dim">→</span> Running Python checks: pandas transformations, numerical accuracy, visualization outputs</div>
+        <div><span class="dim">→</span> Running R checks: tidyverse pipeline, regression model output, interpretation fields</div>
+        <div><span class="dim">→</span> Generating structured feedback report</div>
+        <div><span class="dim">✓</span> Score: 18 / 20 · Feedback ready · Instructor dashboard updated</div>
+      </div>
+
+      <div class="metrics">
+        <div class="metric"><strong>4</strong><span>submission formats</span></div>
+        <div class="metric"><strong>2</strong><span>languages supported</span></div>
+        <div class="metric"><strong>0</strong><span>manual file collection</span></div>
+        <div class="metric"><strong>∞</strong><span>reusable assignment patterns</span></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
